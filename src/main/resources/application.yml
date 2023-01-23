@@ -1,0 +1,29 @@
+server:
+  port: 1225
+  address: 0.0.0.0
+  servlet:
+    context-path: /vhr
+    session:
+      timeout: 43200
+      cookie:
+        http-only: true
+jasypt:
+  encryptor:
+    password: jupyter
+
+spring:
+  datasource:
+    username: ENC(+1sKuIJabOYSxIFgv0MDVA==)
+    password: ENC(Hw6WzIkJnr3tmmbOjxlIGgO1qwNO3UPg)
+    url: ENC(lfsqv3i28aEkW9bngVwYbwC4niI7rtPnTdBeESjwx80ndvesTXgjaS82AD33WRo3aCczPR6ElxAOP3wPfo1zGn7T0N8sZb7kQw4mVvB3yFhJ2zOcVJeUGjTF/zKrZ9NSSkpcwk6bjNATRitGDHzAwdrvnWfViJObsUlLXBhAZnnEd/yjSu7QNn4/vccvDh0PzFfm95KWiYkgm3acApPhJ6MhJxZaaUgGqupt6OQz2RT7Q3rpiEHr3OCzye4koObtup7iOzQyUFuUhNFDa9sEt428kikMgqX1XoLnYoAIi+cIGTBiUahnqg==)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  banner:
+    image:
+      location: banner.txt
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*/*Mapper.xml
+  type-aliases-package: com.ll.mybatis-plus
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
