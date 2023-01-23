@@ -4,6 +4,9 @@ import org.apache.ibatis.annotations.Param;
 import com.ll.vhr.model.HrRole;
 
 public interface HrRoleMapper {
+
+    HrRole selectByHrId(Integer hrId);
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(HrRole record);

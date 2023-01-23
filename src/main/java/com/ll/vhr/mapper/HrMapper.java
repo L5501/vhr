@@ -6,6 +6,9 @@ import com.ll.vhr.model.Role;
 
 import java.util.List;
 
+/**
+ * @author mentaltest
+ */
 public interface HrMapper {
     int deleteByPrimaryKey(Integer id);
 

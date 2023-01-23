@@ -10,6 +10,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @author mentaltest
+ */
 public class Hr implements UserDetails {
     private Integer id;
 
@@ -34,8 +37,12 @@ public class Hr implements UserDetails {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Hr hr = (Hr) o;
         return Objects.equals(username, hr.username);
     }
@@ -97,6 +104,7 @@ public class Hr implements UserDetails {
         this.enabled = enabled;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -128,13 +136,15 @@ public class Hr implements UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>(roles.size());
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return authorities;
+//        List<SimpleGrantedAuthority> authorities = new ArrayList<>(this.roles.size());
+//        for (Role role : roles) {
+//            authorities.add(new SimpleGrantedAuthority(role.getName()));
+//        }
+//        return authorities;
+        return null;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
