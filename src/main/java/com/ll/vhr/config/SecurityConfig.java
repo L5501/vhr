@@ -1,8 +1,12 @@
 package com.ll.vhr.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ll.vhr.model.Hr;
+import com.ll.vhr.model.RespBean;
 import com.ll.vhr.service.HrService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author mentaltest
@@ -52,13 +57,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
-
+                        resp.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = resp.getWriter();
+                        Hr hr = (Hr) authentication.getPrincipal();
+                        RespBean ok = RespBean.ok("登录成功", hr);
+                        String s = new ObjectMapper().writeValueAsString(ok);
+                        out.write(s);
+                        out.flush();
+                        out.close();
                     }
                 })
                 .failureHandler(new AuthenticationFailureHandler() {
                     @Override
-                    public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse rsp, AuthenticationException e) throws IOException, ServletException {
-
+                    public void onAuthenticationFailure(HttpServletRequest req, HttpServletResponse resp, AuthenticationException exception) throws IOException, ServletException {
+                        resp.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = resp.getWriter();
+                        RespBean error = RespBean.error("登录失败");
+                        if (exception instanceof LockedException){
+                            error.setMsg("账户被锁定，请联系管理员");
+                        }else if (exception instanceof CredentialsExpiredException) {
+                            error.setMsg("密码过期，请联系管理员");
+                        }else if (exception instanceof AccountExpiredException){
+                            error.setMsg("账户过期，请联系管理员");
+                        }else if (exception instanceof DisabledException){
+                            error.setMsg("账户被禁用，请联系管理员");
+                        }else if (exception instanceof BadCredentialsException){
+                            error.setMsg("用户名或者密码输入错误，请联系管理员");
+                        }
+                        out.write(new ObjectMapper().writeValueAsString(error));
+                        out.flush();
+                        out.close();
                     }
                 })
                 .permitAll()

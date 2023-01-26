@@ -2,6 +2,9 @@ package com.ll.vhr.model;
 
 import java.util.Date;
 
+/**
+ * @author mentaltest
+ */
 public class MsgContent {
     private Integer id;
 

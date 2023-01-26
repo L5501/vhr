@@ -3,6 +3,9 @@ package com.ll.vhr.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * @author mentaltest
+ */
 public class Politicsstatus implements Serializable {
     private Integer id;
 
