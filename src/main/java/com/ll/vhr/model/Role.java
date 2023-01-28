@@ -1,8 +1,13 @@
 package com.ll.vhr.model;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role implements Serializable {
     private Integer id;
 

@@ -1,6 +1,7 @@
 package com.ll.vhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ll.vhr.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +11,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author mentaltest
- */
 public class Hr implements UserDetails {
     private Integer id;
 
@@ -37,12 +35,8 @@ public class Hr implements UserDetails {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Hr hr = (Hr) o;
         return Objects.equals(username, hr.username);
     }
@@ -136,12 +130,14 @@ public class Hr implements UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        List<SimpleGrantedAuthority> authorities = new ArrayList<>(this.roles.size());
-//        for (Role role : roles) {
-//            authorities.add(new SimpleGrantedAuthority(role.getName()));
-//        }
-//        return authorities;
-        return null;
+        Role role1 = new Role(6,"ROLE_admin","系统管理员");
+        ArrayList<Role> roles = new ArrayList<>();
+        roles.add(role1);
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>(roles.size());
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
     }
 
     @Override
